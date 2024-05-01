@@ -6,7 +6,10 @@ const WEBHOOK_URL = 'https://discord.com/api/webhooks/1235292044721782939/sJA4AK
 async function sendDiscordMessage(message) {
     try {
         const response = await axios.post(WEBHOOK_URL, {
-            content: message
+            content: message,
+            allowed_mentions: {
+                parse: ['everyone']
+            }
         });
 
         if (response.status === 204) {
@@ -20,7 +23,7 @@ async function sendDiscordMessage(message) {
 }
 
 function formatTime(days, hours, minutes) {
-    return `${days.toString().padStart(2, '0')} days : ${hours.toString().padStart(2, '0')} hours : ${minutes.toString().padStart(2, '0')} minutes left`;
+    return `@everyone **${days.toString().padStart(2, '0')}** days : **${hours.toString().padStart(2, '0')}** hours : **${minutes.toString().padStart(2, '0')}** minutes left`;
 }
 
 async function main() {
