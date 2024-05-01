@@ -1,21 +1,18 @@
-const got = require('got');
+const axios = require('axios');
 
 // Replace 'YOUR_WEBHOOK_URL' with your actual Discord webhook URL
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1235292044721782939/sJA4AKOgA9-Uze7FfvfLxsDQGos3eqfbPEOFuGGZKmT8KqL-lEjcnocvyUT1jhWJQElZ';
 
 async function sendDiscordMessage(message) {
     try {
-        const response = await got.post(WEBHOOK_URL, {
-            json: {
-                content: message,
-            },
-            responseType: 'json',
+        const response = await axios.post(WEBHOOK_URL, {
+            content: message
         });
 
-        if (response.statusCode === 204) {
+        if (response.status === 204) {
             console.log('Message sent successfully');
         } else {
-            console.error(`Failed to send message. Status code: ${response.statusCode}`);
+            console.error(`Failed to send message. Status code: ${response.status}`);
         }
     } catch (error) {
         console.error('An error occurred while sending the message:', error);
