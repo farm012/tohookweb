@@ -21,7 +21,7 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies
-        run: npm install node-fetch
+        run: npm install got
 
       - name: Run Script
         run: node send_discord_message.js
