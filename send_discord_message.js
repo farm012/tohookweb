@@ -22,30 +22,36 @@ async function sendDiscordMessage(message) {
     }
 }
 
-function formatTime(days, hours, minutes) {
-    return `@everyone **${days.toString().padStart(2, '0')}** days : **${hours.toString().padStart(2, '0')}** hours : **${minutes.toString().padStart(2, '0')}** minutes left`;
+function formatTime(days, hours, minutes, seconds) {
+    return `@everyone **${days.toString().padStart(2, '0')}** days : **${hours.toString().padStart(2, '0')}** hours : **${minutes.toString().padStart(2, '0')}** minutes : **${seconds.toString().padStart(2, '0')}** seconds left`;
 }
 
 async function main() {
     let days = 40;
     let hours = 24;
     let minutes = 59;
+    let seconds = 59;
 
-    while (days >= 0 && hours >= 0 && minutes >= 0) {
-        const message = formatTime(days, hours, minutes);
+    while (days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0) {
+        const message = formatTime(days, hours, minutes, seconds);
         sendDiscordMessage(message);
-        await new Promise(resolve => setTimeout(resolve, 60000)); // Wait for 1 minute (60 seconds)
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second (1000 milliseconds)
         
-        minutes -= 1;
-        if (minutes < 0) {
-            minutes = 59;
-            hours -= 1;
-            if (hours < 0) {
-                hours = 24;
-                days -= 1;
+        seconds -= 1;
+        if (seconds < 0) {
+            seconds = 59;
+            minutes -= 1;
+            if (minutes < 0) {
+                minutes = 59;
+                hours -= 1;
+                if (hours < 0) {
+                    hours = 24;
+                    days -= 1;
+                }
             }
         }
     }
 }
 
 main();
+
